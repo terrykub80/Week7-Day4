@@ -66,4 +66,39 @@ newHeader.addEventListener('mouseover', handleHeaderEvent)
 
 
 
-console.log("========")
+console.log("====Add event listner to form====")
+// Grab the form
+let form = document.getElementById('countryForm')
+console.log(form);
+
+async function handleFormSubmit(e){
+    e.preventDefault(); // Prevent event from refreshing page
+    console.log(e)
+    let countryName = e.target.countryName.value;
+    console.log(countryName);
+
+    let countryInfo = await getCountryInfo(countryName);
+    console.log(countryInfo);
+
+    // Clear the input box at the end
+    e.target.countryName.value = '';
+};
+
+
+
+// add event listner to form
+form.addEventListener('submit', handleFormSubmit);
+
+
+console.log("====Function that takes in a country name and makes a GET request to API, returns data====")
+// Function that takes in a country name and makes a GET request to API, returns data
+async function getCountryInfo(countryName){
+    let response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
+    let data = await response.json();
+    return data[0];
+};
+
+
+
+
+
